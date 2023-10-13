@@ -222,6 +222,51 @@ function Get-PrivatePackagesToCacheOnVHD {
     }
 }
 
+function Update-HnsBinary {
+    # Use the '$env:WindowsPrivatePackagesURL' to store the HNS binary download link
+    if (![string]::IsNullOrEmpty($env:WindowsPrivatePackagesURL)) {
+        Write-Log "WindowsPrivatePackagesURL was set, downloading HNS binary from $env:WindowsPrivatePackagesURL"
+        
+        $hnsBinaryDownloadlink = $env:WindowsPrivatePackagesURL
+
+        $dest = "C:\HnsBinary.zip"
+        DownloadFileWithRetry -URL $hnsBinaryDownloadlink -Dest $dest -redactUrl
+
+        Expand-Archive -Path $dest -DestinationPath "C:\HnsBinary" -Force
+        cd "C:\HnsBinary"
+
+        cp C:\windows\system32\HostNetSvc.dll Backup.HostNetSvc.dll
+        cp C:\windows\system32\drivers\vfpext.sys Backup.vfpext.sys
+        Get-ChildItem | Write-Log
+
+        bcdedit /set TESTSIGNING ON
+        bcdedit /debug off
+        bcdedit /bootdebug off
+        # Restart-Computer -force # This is not needed, since the VM will be restarted after the first stage during the VHD building
+
+        cd "HnsBinaries"
+        .\sfpcopy.exe .\HostNetSvc.dll C:\windows\system32\HostNetSvc.dll
+        .\sfpcopy.exe .\vfpext.sys C:\windows\system32\drivers\vfpext.sys
+        # Restart-Computer -force # This is not needed, since the VM will be restarted after the first stage during the VHD building
+
+        # Validate the HNS binary file hash
+        $hnsFileHash = "30BBCC6994DF7DAC9B9DF81022D5C3FC8BFFE7CF42ED2F7BEAAA441F4C331F48"
+        $vfpFileHash = "C2DF8E1C8E948B02199C54AC3CA599F3C05A4280C04F3A38D928C63285E5E1D1"
+        $hnsFileHasInNode = (Get-FileHash C:\windows\system32\HostNetSvc.dll).Hash
+        $vfpFileHashInNode = (Get-FileHash C:\windows\system32\drivers\vfpext.sys).Hash
+        if($hnsFileHash -eq $hnsFileHasInNode) {
+            Write-Log "HNS replacement succesful."
+        } else {
+            Write-Log "HNS replacement failed."
+        }
+        if($vfpFileHash -eq $vfpFileHashInNode) {
+            Write-Log "VFP replacement succesful."
+        } else {
+            Write-Log "VFP replacement failed."
+        }
+    }
+}
+
 function Install-ContainerD {
     # installing containerd during VHD building is to cache container images into the VHD,
     # and the containerd to managed customer containers after provisioning the vm is not necessary
@@ -700,6 +745,7 @@ try{
             Install-WindowsPatches
             Install-OpenSSH
             Update-WindowsFeatures
+            Get-PrivatePackagesToCacheOnVHD
         }
         "2" {
             Write-Log "Performing actions for provisioning phase 2"
