@@ -54,7 +54,6 @@ message Configuration {
   bool is_sgx_node = 12;
   TeleportConfig teleport_config = 13;
   // removed NEEDS_CONTAINERD because it's always needed now
-  
 
 
   HTTPProxyConfig http_proxy_configuration = 8;
