@@ -38,6 +38,7 @@ message Configuration {
   NetworkPluginType network_plugin = 6;
   NetworkPolicyType network_policy = 7;
   NetworkMode network_mode = 8;
+  RuncConfig runc_config = 9;
 
   // ... and a bunch of user-specified config
   string repo_depot_endpoint = 4;
@@ -218,4 +219,9 @@ message ContainerdConfig {
 message TeleportConfig {
   FEATURE_STATE_ENABLED status = 1;
   string teleportd_plugin_download_url = 2;
+}
+
+message RuncConfig {
+  string runc_version = 1;
+  string runc_package_url = 2;
 }
