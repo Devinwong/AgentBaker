@@ -137,7 +137,7 @@
         "default": {
           "current": {
             "versions": [
-              "1.29.0"
+              "1.30.3"
             ],
             "downloadURL": "https://acs-mirror.azureedge.net/cri-tools/v${version}/binaries/crictl-v${version}-linux-${CPU_ARCH}.tar.gz"
           }
