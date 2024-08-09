@@ -4,8 +4,8 @@
       "downloadURL": "mcr.microsoft.com/oss/kubernetes/autoscaler/addon-resizer:*",
       "amd64OnlyVersions": [],
       "multiArchVersions": [
-        "1.8.20",
-        "1.8.22"
+        1.30.3+k3s1
+        1.30.3+k3s1
       ]
     },
     {
@@ -22,7 +22,7 @@
       "downloadURL": "mcr.microsoft.com/oss/kubernetes/metrics-server:*",
       "amd64OnlyVersions": [],
       "multiArchVersions": [
-        "v0.7.1"
+        1.30.3+k3s1
       ]
     }
   ],
@@ -33,7 +33,7 @@
         "default": {
           "current": {
             "versions": [
-              "1.22.2+k3s1"
+              1.30.3+k3s1
             ]
           }
         }
@@ -46,24 +46,24 @@
         "ubuntu": {
           "r1804": {
             "versions": [
-              "1.1.12"
+              1.30.3+k3s1
             ]
           },
           "r2004": {
             "versions": [
-              "1.1.12"
+              1.30.3+k3s1
             ]
           },
           "r2204": {
             "versions": [
-              "1.1.12"
+              1.30.3+k3s1
             ]
           }
         },
         "mariner": {
           "current": {
             "versions": [
-              "1.1.9-5.cm2"
+              1.30.3+k3s1
             ]
           }
         }
@@ -76,26 +76,26 @@
         "ubuntu": {
           "current": {
             "versions": [
-              "1.7.20"
+              1.30.3+k3s1
             ]
           },
           "r1804": {
             "versions": [
-              "1.7.1-1"
+              1.30.3+k3s1
             ]
           }
         },
         "mariner": {
           "current": {
             "versions": [
-              "1.6.26-5.cm2"
+              1.30.3+k3s1
             ]
           }
         },
         "default": {
           "current": {
             "versions": [
-              "1.7.20"
+              1.30.3+k3s1
             ]
           }
         }
@@ -108,7 +108,7 @@
         "default": {
           "current": {
             "versions": [
-              "1.4.1"
+              1.30.3+k3s1
             ],
             "downloadURL": "https://acs-mirror.azureedge.net/cni-plugins/v${version}/binaries/cni-plugins-linux-${CPU_ARCH}-v${version}.tgz"
           }
@@ -122,8 +122,8 @@
         "default": {
           "current": {
             "versions": [
-              "1.4.54",
-              "1.5.28"
+              1.30.3+k3s1
+              1.30.3+k3s1
             ],
             "downloadURL": "https://acs-mirror.azureedge.net/azure-cni/v${version}/binaries/azure-vnet-cni-linux-${CPU_ARCH}-v${version}.tgz"
           }
@@ -137,7 +137,7 @@
         "default": {
           "current": {
             "versions": [
-              "1.29.0"
+              1.30.3+k3s1
             ],
             "downloadURL": "https://acs-mirror.azureedge.net/cri-tools/v${version}/binaries/crictl-v${version}-linux-${CPU_ARCH}.tar.gz"
           }
@@ -151,20 +151,20 @@
         "default": {
           "current": {
             "versions": [
-              "1.27.13",
-              "1.27.14",
-              "1.27.15",
-              "1.27.16",
-              "1.28.9",
-              "1.28.10",
-              "1.28.11",
-              "1.28.12",
-              "1.29.4",
-              "1.29.5",
-              "1.29.6",
-              "1.29.7",
-              "1.30.1",
-              "1.30.2",
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
+              1.30.3+k3s1
               "1.30.3"
             ],
             "downloadURL": "https://acs-mirror.azureedge.net/kubernetes/v${version}/binaries/kubernetes-node-linux-${CPU_ARCH}.tar.gz"
