@@ -122,7 +122,7 @@
         "default": {
           "current": {
             "versions": [
-              "1.4.54",
+              "1.30.3",
               "1.5.28"
             ],
             "downloadURL": "https://acs-mirror.azureedge.net/azure-cni/v${version}/binaries/azure-vnet-cni-linux-${CPU_ARCH}-v${version}.tgz"
