@@ -108,7 +108,7 @@
         "default": {
           "current": {
             "versions": [
-              "1.4.1"
+              "1.30.3"
             ],
             "downloadURL": "https://acs-mirror.azureedge.net/cni-plugins/v${version}/binaries/cni-plugins-linux-${CPU_ARCH}-v${version}.tgz"
           }
