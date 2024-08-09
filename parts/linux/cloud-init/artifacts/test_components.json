@@ -33,7 +33,7 @@
         "default": {
           "current": {
             "versions": [
-              "1.22.2+k3s1"
+              "1.30.3"
             ]
           }
         }
