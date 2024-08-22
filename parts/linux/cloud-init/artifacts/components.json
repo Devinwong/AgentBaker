@@ -450,13 +450,13 @@
           "r1804": {
             "tag": "name=moby-containerd os=ubuntu release=18.04",
             "versions": [
-              "1.7.1-1"
+              "v1.7.2+azure-ubuntu18.04u1"
             ]
           },
           "2004": {
             "tag": "name=moby-containerd os=ubuntu release=20.04",
             "versions": [
-              "1.7.20"
+              "v1.7.20-ubuntu20.04u1"
             ]
           },
           "2204": {
