@@ -1,7 +1,7 @@
 {
   "packageName": "moby-containerd",
   "versions": [
-    {"version": "1.3.0"},
-    {"version": "1.2.9"}
-  ]
+    {"version": "v1.7.21-ubuntu22.04u1"},
+    {"version": "1.3.0"}
+]
 }
