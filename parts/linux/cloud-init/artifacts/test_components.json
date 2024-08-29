@@ -62,8 +62,8 @@
               {
                 "aksVersion": "1.30",
                 "renovateTag": "name=moby-containerd os=ubuntu release=22.04",
-                "latestVersion": "1.2.99",
-                "secondLatestVersion": "1.2.98"     
+"latestVersion": "v1.7.21-ubuntu22.04u1",
+"secondLatestVersion": "1.2.99"
               },
               {
                 "aksVersion": "1.29",
@@ -75,7 +75,7 @@
           "r1804": {
             "renovateTag": "name=moby-containerd os=ubuntu release=18.04",
             "versions": [
-              "1.7.1-1"
+              "v1.7.2+azure-ubuntu18.04u1"
             ]
           }
         },
