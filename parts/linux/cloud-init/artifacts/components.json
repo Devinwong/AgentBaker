@@ -467,7 +467,7 @@
             "pkgVersions": [
               {
                 "renovateTag": "name=moby-containerd os=ubuntu release=20.04",
-                "latestVersion": "1.7.20"
+                "latestVersion": "v1.7.21-ubuntu20.04u1"
               }
             ]
           },
