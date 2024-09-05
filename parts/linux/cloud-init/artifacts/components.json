@@ -72,11 +72,11 @@
       "multiArchVersionsV2": [
         {
           "renovateTag": "registry=https://mcr.microsoft.com name=containernetworking/azure-cni",
-          "latestVersion": "v1.5.28"
+                "latestVersion": "v1.6.5"
         },
         {
           "renovateTag": "registry=https://mcr.microsoft.com name=containernetworking/azure-cni",
-          "latestVersion": "v1.6.0"
+                "latestVersion": "v1.6.5"
         }
       ]
     },
