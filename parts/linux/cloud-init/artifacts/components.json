@@ -389,8 +389,8 @@
       "multiArchVersionsV2": [
         {
           "renovateTag": "registry=https://mcr.microsoft.com name=oss/kubernetes-csi/azuredisk-csi",
-          "latestVersion": "v1.28.9",
-          "previousLatestVersion": "v1.28.8"
+          "latestVersion": "v1.28.10",
+          "previousLatestVersion": "v1.28.9"
         },
         {
           "renovateTag": "registry=https://mcr.microsoft.com name=oss/kubernetes-csi/azuredisk-csi",
