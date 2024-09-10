@@ -364,13 +364,13 @@
       "multiArchVersionsV2": [
         {
           "renovateTag": "registry=https://mcr.microsoft.com, name=oss/kubernetes-csi/azurefile-csi",
-          "latestVersion": "v1.28.12",
-          "previousLatestVersion": "v1.28.11"
+          "latestVersion": "v1.30.5",
+          "previousLatestVersion": "v1.28.12"
         },
         {
           "renovateTag": "registry=https://mcr.microsoft.com, name=oss/kubernetes-csi/azurefile-csi",
-          "latestVersion": "v1.29.8",
-          "previousLatestVersion": "v1.29.7"
+          "latestVersion": "v1.30.5",
+          "previousLatestVersion": "v1.29.8"
         },
         {
           "renovateTag": "registry=https://mcr.microsoft.com, name=oss/kubernetes-csi/azurefile-csi",
