@@ -452,7 +452,7 @@
         },
         {
           "renovateTag": "registry=https://mcr.microsoft.com, name=azure-policy/policy-kubernetes-addon-prod",
-          "latestVersion": "1.5.0"
+          "latestVersion": "1.7.1"
         }
       ]
     },
