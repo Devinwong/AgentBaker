@@ -17,15 +17,15 @@
   ],
   "packageRules": [
     {
-      "matchDatasources": ["docker", "custom.deb1804", "custom.deb2004", "custom.deb2204"],
+      "matchDatasources": ["docker", "custom.deb1804", "custom.deb2004", "custom.deb2204", "custom.deb2404"],
       "matchUpdateTypes": [
         "minor"
       ],
       "automerge": false,
-      "enabled": true
+      "enabled": false
     },
     {
-      "matchDatasources": ["docker", "custom.deb1804", "custom.deb2004", "custom.deb2204"],
+      "matchDatasources": ["docker", "custom.deb1804", "custom.deb2004", "custom.deb2204", "custom.deb2404"],
       "matchUpdateTypes": [
         "patch",
         "pin",
@@ -36,7 +36,14 @@
     },
     {
       "matchPackageNames": ["moby-runc", "moby-containerd"],
-      "assignees": ["devinwong"],
+      "assignees": ["devinwong", "anujmaheshwari1", "cameronmeissner", "AlisonB319", "lilypan26", "djsly", "jason1028kr", "UtheMan", "zachary-bailey", "ganeshkumarashok"]
+    },
+    {
+      "matchPackageNames": ["aks/aks-node-ca-watcher"],
+      "assignees": ["UtheMan"]
+    },
+    {
+      "matchPackageNames": ["moby-runc", "moby-containerd"],
       "extractVersion": "^v?(?<version>.+)$"
     }
   ],
@@ -56,13 +63,13 @@
     },
     {
       "customType": "regex",
-      "description": "auto update packages for OS release ubuntu 18.04 in components.json",
+      "description": "auto update packages for OS ubuntu 18.04 in components.json",
       "fileMatch": [
         "parts/linux/cloud-init/artifacts/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "\"renovateTag\":\\s*\"name=(?<packageName>[^,]+), os=ubuntu, release=18\\.04\",\\s*\"versions\":\\s*\\[\\s*\"(?<currentValue>[^\"]+)\""
+        "\"renovateTag\":\\s*\"name=(?<packageName>[^\"]+), os=ubuntu, release=18\\.04\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
       ],
       "datasourceTemplate": "custom.deb1804",
       "versioningTemplate": "deb",
@@ -70,13 +77,13 @@
     },
     {
       "customType": "regex",
-      "description": "auto update packages for OS release ubuntu 20.04 in components.json",
+      "description": "auto update packages for OS ubuntu 20.04 in components.json",
       "fileMatch": [
         "parts/linux/cloud-init/artifacts/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "\"renovateTag\":\\s*\"name=(?<packageName>[^,]+), os=ubuntu, release=20\\.04\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"[^}]*"
+        "\"renovateTag\":\\s*\"name=(?<packageName>[^\"]+), os=ubuntu, release=20\\.04\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
       ],
       "datasourceTemplate": "custom.deb2004",
       "versioningTemplate": "deb",
@@ -84,13 +91,13 @@
     },
     {
       "customType": "regex",
-      "description": "auto update packages for OS release ubuntu 22.04 in components.json",
+      "description": "auto update packages for OS ubuntu 22.04 in components.json",
       "fileMatch": [
         "parts/linux/cloud-init/artifacts/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "\"renovateTag\":\\s*\"name=(?<packageName>[^,]+), os=ubuntu, release=22\\.04\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
+        "\"renovateTag\":\\s*\"name=(?<packageName>[^\"]+), os=ubuntu, release=22\\.04\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
       ],
       "datasourceTemplate": "custom.deb2204",
       "versioningTemplate": "deb",
@@ -98,13 +105,13 @@
     },
     {
       "customType": "regex",
-      "description": "auto update packages for OS release ubuntu 24.04 in components.json",
+      "description": "auto update packages for OS ubuntu 24.04 in components.json",
       "fileMatch": [
         "parts/linux/cloud-init/artifacts/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "\"renovateTag\":\\s*\"name=(?<packageName>[^,]+), os=ubuntu, release=24\\.04\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
+        "\"renovateTag\":\\s*\"name=(?<packageName>[^\"]+), os=ubuntu, release=24\\.04\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
       ],
       "datasourceTemplate": "custom.deb2404",
       "versioningTemplate": "deb",
