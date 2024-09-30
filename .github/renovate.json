@@ -29,7 +29,7 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "additionalBranchPrefix ": "devincustom",
+      "additionalBranchPrefix": "devin{{baseDir}}-",
       "automerge": false,
       "enabled": true
     },
