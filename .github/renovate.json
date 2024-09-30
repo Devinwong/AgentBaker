@@ -25,10 +25,19 @@
       "enabled": false
     },
     {
-      "matchDatasources": ["docker", "custom.deb1804", "custom.deb2004", "custom.deb2204", "custom.deb2404"],
+      "matchDatasources": ["docker", "custom.deb1804", "custom.deb2004", "custom.deb2404"],
       "matchUpdateTypes": [
         "patch"
       ],
+      "automerge": false,
+      "enabled": true
+    },
+    {
+      "matchDatasources": ["custom.deb2204"],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "additionalBranchPrefix": "deb2204-",
       "automerge": false,
       "enabled": true
     },
@@ -137,8 +146,7 @@
       "format": "plain",
       "transformTemplates": [
         "{\"releases\": $map(($index := releases#$i[version=\"Package: {{packageName}}\"].$i; $map($index, function($i) { $replace(releases[$i + 1].version, /^Version:\\s*/, \"v\") })), function($v) { {\"version\": $v} })}"
-      ],
-      "additionalBranchPrefix": "devin{{baseDir}}-"
+      ]
     },
     "deb2004": {
       "defaultRegistryUrlTemplate": "https://packages.microsoft.com/ubuntu/20.04/prod/dists/testing/main/binary-amd64/Packages",
