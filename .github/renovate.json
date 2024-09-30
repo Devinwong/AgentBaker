@@ -21,7 +21,6 @@
       "matchUpdateTypes": [
         "minor"
       ],
-      "branchName": "devincustom",
       "automerge": false,
       "enabled": false
     },
@@ -30,6 +29,7 @@
       "matchUpdateTypes": [
         "patch"
       ],
+      "additionalBranchPrefix ": "devincustom",
       "automerge": false,
       "enabled": true
     },
