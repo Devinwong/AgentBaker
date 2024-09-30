@@ -21,6 +21,7 @@
       "matchUpdateTypes": [
         "minor"
       ],
+      "branchName": "devincustom",
       "automerge": false,
       "enabled": false
     },
