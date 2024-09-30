@@ -38,6 +38,7 @@
         "patch"
       ],
       "additionalBranchPrefix": "deb2204-",
+      "commitMessageExtra": "ubuntu 22.04",
       "automerge": false,
       "enabled": true
     },
