@@ -1,6 +1,15 @@
 {
   "ContainerImages": [
     {
+      "downloadURL": "mcr.microsoft.com/oss/binaries/kubernetes/kubernetes-node:*",
+      "amd64OnlyVersions": [],
+        {
+          "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
+          "latestVersion": "v1.30.0-linux-amd64"
+        }
+      ]
+    },
+    {
       "downloadURL": "mcr.microsoft.com/oss/kubernetes/autoscaler/addon-resizer:*",
       "amd64OnlyVersions": [],
       "multiArchVersionsV2": [
