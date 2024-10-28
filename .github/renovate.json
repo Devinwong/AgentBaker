@@ -85,6 +85,10 @@
       "assignees": ["SriHarsha001"]
     },
     {
+      "matchPackageNames": ["oss/kubernetes/kube-proxy"],
+      "assignees": [" wenhug"]
+    },
+    {
       "matchPackageNames": ["moby-runc", "moby-containerd"],
       "extractVersion": "^v?(?<version>.+)$"
     }
