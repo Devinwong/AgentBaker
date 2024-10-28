@@ -776,13 +776,13 @@
             "versionsV2": [
               {
                 "k8sVersion": "1.27",
-                "renovateTag": "<DO_NOT_UPDATE>",
-                "latestVersion": "1.27.100-akslts",
+                "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
+                "latestVersion": "1.27.99-akslts",
                 "previousLatestVersion": "1.27.16"
               },
               {
                 "k8sVersion": "1.28",
-                "renovateTag": "<DO_NOT_UPDATE>",
+                "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
                 "latestVersion": "1.28.15",
                 "previousLatestVersion": "1.28.14"
               },
@@ -805,7 +805,7 @@
                 "previousLatestVersion": "1.31.1"
               }
             ],
-            "downloadURL": "https://acs-mirror.azureedge.net/kubernetes/v${version}/binaries/kubernetes-node-linux-${CPU_ARCH}.tar.gz"
+            "downloadURL": "mcr.microsoft.com/oss/binaries/kubernetes/kubernetes-node:v${version}-linux-${CPU_ARCH}"
           }
         }
       }
