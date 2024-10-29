@@ -22,6 +22,17 @@
       ]
     },
     {
+      "downloadURL": "mcr.microsoft.com/oss/binaries/kubernetes/kubernetes-node:*",
+      "amd64OnlyVersions": [],
+      "multiArchVersionsV2": [
+        {
+          "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
+                "latestVersion": "1.27.100-akslts",
+                "previousLatestVersion": "1.27.16"
+        }
+      ]
+    },
+    {
       "downloadURL": "mcr.microsoft.com/oss/kubernetes/coredns:*",
       "amd64OnlyVersions": [],
       "multiArchVersionsV2": [
