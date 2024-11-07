@@ -33,6 +33,11 @@
       "enabled": true
     },
     {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["oss/binaries/kubernetes/kubernetes-node"],
+      "versioning": "loose"
+    },
+    {
       "matchDatasources": ["custom.deb1804"],
       "matchUpdateTypes": [
         "patch"
