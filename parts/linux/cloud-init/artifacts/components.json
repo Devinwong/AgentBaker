@@ -27,8 +27,8 @@
       "multiArchVersionsV2": [
         {
           "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
-                "latestVersion": "1.30.5",
-                "previousLatestVersion": "1.30.4"
+          "latestVersion": "v1.30.6-windows-amd64",
+          "previousLatestVersion": "1.30.5"
         }
       ]
     },
