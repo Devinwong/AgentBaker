@@ -857,7 +857,7 @@
               },
               {
                 "renovateTag": "OCI_registry=https://mcr.microsoft.com, name=oss/binaries/deislabs/containerd-wasm-shims",
-                "latestVersion": "0.5.0"
+          "latestVersion": "v0.5.1"
               },
               {
                 "renovateTag": "OCI_registry=https://mcr.microsoft.com, name=oss/binaries/deislabs/containerd-wasm-shims",
