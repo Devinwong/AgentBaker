@@ -794,8 +794,8 @@
               {
                 "k8sVersion": "1.28",
                 "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
-                "latestVersion": "1.28.14-linux-",
-                "previousLatestVersion": "1.28.13"
+          "latestVersion": "v1.28.15-windows-amd64",
+          "previousLatestVersion": "1.28.14-linux-"
               },
               {
                 "k8sVersion": "1.29",
