@@ -35,7 +35,6 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["oss/binaries/kubernetes/kubernetes-node"],
-      "versioning": "loose",
       "extractVersion": "^(?P<version>.*?)-[^-]*-[^-]*$"
     },
     {
