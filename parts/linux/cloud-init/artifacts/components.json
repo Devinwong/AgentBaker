@@ -788,35 +788,35 @@
               {
                 "k8sVersion": "1.27",
                 "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
-                "latestVersion": "1.27.100-akslts",
-                "previousLatestVersion": "1.27.16"
+                "latestVersion": "v1.27.100-akslts",
+                "previousLatestVersion": "v1.27.16"
               },
               {
                 "k8sVersion": "1.28",
                 "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
-                "latestVersion": "1.28.14",
-                "previousLatestVersion": "1.28.13"
+                "latestVersion": "v1.28.14",
+                "previousLatestVersion": "v1.28.13"
               },
               {
                 "k8sVersion": "1.29",
                 "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
-                "latestVersion": "1.29.10",
-                "previousLatestVersion": "1.29.9"
+                "latestVersion": "v1.29.10",
+                "previousLatestVersion": "v1.29.9"
               },
               {
                 "k8sVersion": "1.30",
                 "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
-                "latestVersion": "1.30.6",
-                "previousLatestVersion": "1.30.5"
+                "latestVersion": "v1.30.6",
+                "previousLatestVersion": "v1.30.5"
               },
               {
                 "k8sVersion": "1.31",
                 "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node",
-                "latestVersion": "1.31.2",
-                "previousLatestVersion": "1.31.1"
+                "latestVersion": "v1.31.2",
+                "previousLatestVersion": "v1.31.1"
               }
             ],
-            "downloadURL": "mcr.microsoft.com/oss/binaries/kubernetes/kubernetes-node:v${version}-linux-${CPU_ARCH}"
+            "downloadURL": "mcr.microsoft.com/oss/binaries/kubernetes/kubernetes-node:${version}-linux-${CPU_ARCH}"
           }
         }
       }
