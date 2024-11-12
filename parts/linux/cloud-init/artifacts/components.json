@@ -829,15 +829,15 @@
           "current": {
             "versionsV2": [
               {
-                "renovateTag": "<DO_NOT_UPDATE>",
-                "latestVersion": "1.30.0"
+                "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider",
+                "latestVersion": "v1.30.0"
               },
               {
-                "renovateTag": "<DO_NOT_UPDATE>",
-                "latestVersion": "1.29.2"
+                "renovateTag": "registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider",
+                "latestVersion": "v1.29.2"
               }
             ],
-            "downloadURL": "https://acs-mirror.azureedge.net/cloud-provider-azure/v${version}/binaries/azure-acr-credential-provider-linux-${CPU_ARCH}-v${version}.tar.gz"
+            "downloadURL": "mcr.microsoft.com/oss/binaries/kubernetes/azure-acr-credential-provider:${version}-linux-${CPU_ARCH}"
           }
         }
       }
