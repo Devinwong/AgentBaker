@@ -35,7 +35,8 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["oss/binaries/kubernetes/kubernetes-node"],
-      "versioning": "loose"
+      "versioning": "loose",
+      "extractVersion": "^.*?(?=-)"
     },
     {
       "matchDatasources": ["custom.deb1804"],
