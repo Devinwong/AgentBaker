@@ -34,7 +34,7 @@
     },
     {
       "matchDatasources": ["docker"],
-      "matchPackageNames": ["oss/binaries/kubernetes/kubernetes-node", "azure-acr-credential-provider"],
+      "matchPackageNames": ["oss/binaries/kubernetes/kubernetes-node", "oss/binaries/kubernetes/azure-acr-credential-provider"],
       "extractVersion": "^(?P<version>.*?)-[^-]*-[^-]*$"
     },
     {
