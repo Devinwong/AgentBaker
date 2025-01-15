@@ -74,8 +74,8 @@
     },
     {
       "matchPackageNames": ["azure-cni", "azure-cns", "containernetworking/azure-cni", "containernetworking/azure-cns", "containernetworking/cilium/cilium"],
-      "assignees": ["rbtr", "behzad-mir", "QxBytes", "jpayne3506"],
-      "reviewers": ["rbtr", "behzad-mir", "QxBytes", "jpayne3506"]
+      "assignees": ["xmzhao0822"],
+      "reviewers": ["xmzhao0822"]
     },
     {
       "matchPackageNames": ["aks/aks-node-ca-watcher"],
