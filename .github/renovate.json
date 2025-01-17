@@ -25,7 +25,7 @@
       "enabled": false
     },
     {
-      "matchDatasources": ["docker", "containernetworking/cilium/cilium"],
+      "matchDatasources": ["docker"],
       "matchUpdateTypes": [
         "patch"
       ],
@@ -75,7 +75,8 @@
     {
       "matchPackageNames": ["azure-cni", "azure-cns", "containernetworking/azure-cni", "containernetworking/azure-cns", "containernetworking/cilium/cilium"],
       "assignees": ["xmzhao0822"],
-      "reviewers": ["xmzhao0822"]
+      "reviewers": ["xmzhao0822"],
+      "versionCompatibility": "^(?<version>[^-]+)(?<compatibility>-.*)?$"
     },
     {
       "matchPackageNames": ["aks/aks-node-ca-watcher"],
