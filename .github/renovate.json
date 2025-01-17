@@ -25,7 +25,7 @@
       "enabled": false
     },
     {
-      "matchDatasources": ["docker"],
+      "matchDatasources": ["docker", "containernetworking/cilium/cilium"],
       "matchUpdateTypes": [
         "patch"
       ],
