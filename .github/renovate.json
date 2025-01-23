@@ -70,6 +70,11 @@
     },
     {
       "matchPackageNames": ["moby-runc", "moby-containerd"],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "automerge": true,
+      "enabled": true,
       "assignees": ["devinwong", "anujmaheshwari1", "cameronmeissner", "AlisonB319", "lilypan26", "djsly", "jason1028kr", "UtheMan", "zachary-bailey", "ganeshkumarashok"]
     },
     {
