@@ -92,7 +92,7 @@
       "reviewers": ["mainred"]
     },
     {
-      "matchPackageNames": ["oss/kubernetes-csi/azurefile-csi"],
+      "matchPackageNames": ["oss/kubernetes-csi/*"],
       "assignees": ["lilypan26"],
       "reviewers": ["lilypan26"]
     },
