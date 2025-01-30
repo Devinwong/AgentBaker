@@ -93,8 +93,8 @@
     },
     {
       "matchPackageNames": ["oss/kubernetes-csi"],
-      "assignees": ["andyzhangx"],
-      "reviewers": ["andyzhangx"]
+      "assignees": ["lilypan26"],
+      "reviewers": ["lilypan26"]
     },
     {
       "matchDatasources": ["docker"],
