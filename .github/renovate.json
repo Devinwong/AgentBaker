@@ -77,6 +77,7 @@
     },
     {
       "matchPackageNames": ["azure-cni", "azure-cns", "containernetworking/azure-cni", "containernetworking/azure-cns", "containernetworking/cilium/cilium"],
+      "groupName": "azure-cni-cns-cilium",
       "assignees": ["devinwong","rbtr", "behzad-mir", "QxBytes", "jpayne3506"],
       "reviewers": ["rbtr", "behzad-mir", "QxBytes", "jpayne3506"]
     },
@@ -87,6 +88,7 @@
     },
     {
       "matchPackageNames": ["oss/kubernetes/coredns", "oss/v2/kubernetes/coredns"],
+      "groupName": "coredns",
       "assignees": ["SriHarsha001"],
       "reviewers": ["SriHarsha001"]
     },
@@ -97,6 +99,7 @@
     },
     {
       "matchPackageNames": ["oss/kubernetes-csi/*"],
+      "groupName": "csi",
       "assignees": ["andyzhangx"],
       "reviewers": ["andyzhangx"]
     },
