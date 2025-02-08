@@ -39,8 +39,7 @@
       ],
       "additionalBranchPrefix": "deb1804-",
       "automerge": false,
-      "enabled": true,
-      "groupName" : "debUpdates"
+      "enabled": true
     },
     {
       "matchDatasources": ["custom.deb2004"],
@@ -49,8 +48,7 @@
       ],
       "additionalBranchPrefix": "deb2004-",
       "automerge": false,
-      "enabled": true,
-      "groupName" : "debUpdates"
+      "enabled": true
     },
     {
       "matchDatasources": ["custom.deb2204"],
@@ -59,8 +57,7 @@
       ],
       "additionalBranchPrefix": "deb2204-",
       "automerge": false,
-      "enabled": true,
-      "groupName" : "debUpdates"
+      "enabled": true
     },
     {
       "matchDatasources": ["custom.deb2404"],
@@ -69,8 +66,7 @@
       ],
       "additionalBranchPrefix": "deb2404-",
       "automerge": false,
-      "enabled": true,
-      "groupName" : "debUpdates"
+      "enabled": true
     },
     {
       "matchPackageNames": ["moby-runc", "moby-containerd"],
@@ -79,6 +75,7 @@
       ],
       "automerge": true,
       "enabled": true,
+      "groupName" : "runc-containerd",
       "assignees": ["devinwong", "anujmaheshwari1", "cameronmeissner", "AlisonB319", "lilypan26", "djsly", "jason1028kr", "UtheMan", "zachary-bailey", "ganeshkumarashok"],
       "reviewers": ["devinwong", "anujmaheshwari1", "cameronmeissner", "AlisonB319", "lilypan26", "djsly", "jason1028kr", "UtheMan", "zachary-bailey", "ganeshkumarashok"]
     },
