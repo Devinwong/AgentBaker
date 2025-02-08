@@ -11,6 +11,10 @@
   "recreateWhen": "never",
   "labels": ["renovate"],
   "rebaseWhen": "behind-base-branch",
+  "schedule": [
+    "after 10pm and before 5am every weekday",
+    "every weekend"
+  ],
   "timezone": "America/Los_Angeles",
   "logLevelRemap": [
     {
@@ -34,7 +38,8 @@
       ],
       "additionalBranchPrefix": "deb1804-",
       "automerge": false,
-      "enabled": true
+      "enabled": true,
+      "groupName" : "debUpdates"
     },
     {
       "matchDatasources": ["custom.deb2004"],
@@ -43,7 +48,8 @@
       ],
       "additionalBranchPrefix": "deb2004-",
       "automerge": false,
-      "enabled": true
+      "enabled": true,
+      "groupName" : "debUpdates"
     },
     {
       "matchDatasources": ["custom.deb2204"],
@@ -52,7 +58,8 @@
       ],
       "additionalBranchPrefix": "deb2204-",
       "automerge": false,
-      "enabled": true
+      "enabled": true,
+      "groupName" : "debUpdates"
     },
     {
       "matchDatasources": ["custom.deb2404"],
@@ -61,7 +68,8 @@
       ],
       "additionalBranchPrefix": "deb2404-",
       "automerge": false,
-      "enabled": true
+      "enabled": true,
+      "groupName" : "debUpdates"
     },
     {
       "matchPackageNames": ["moby-runc", "moby-containerd"],
