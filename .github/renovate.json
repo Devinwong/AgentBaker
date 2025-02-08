@@ -11,10 +11,6 @@
   "recreateWhen": "never",
   "labels": ["renovate"],
   "rebaseWhen": "behind-base-branch",
-  "schedule": [
-    "after 10pm and before 5am every weekday",
-    "every weekend"
-  ],
   "timezone": "America/Los_Angeles",
   "logLevelRemap": [
     {
