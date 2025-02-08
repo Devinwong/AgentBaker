@@ -37,7 +37,6 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "additionalBranchPrefix": "deb1804-",
       "automerge": false,
       "enabled": true
     },
@@ -46,7 +45,6 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "additionalBranchPrefix": "deb2004-",
       "automerge": false,
       "enabled": true
     },
@@ -55,7 +53,6 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "additionalBranchPrefix": "deb2204-",
       "automerge": false,
       "enabled": true
     },
@@ -64,7 +61,6 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "additionalBranchPrefix": "deb2404-",
       "automerge": false,
       "enabled": true
     },
