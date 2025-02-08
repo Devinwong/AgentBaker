@@ -112,9 +112,7 @@
     },
     {
       "matchPackageNames": ["containernetworking/azure-ipam"],
-      "groupName": "azure-ipam",
-      "assignees": [],
-      "reviewers": []
+      "groupName": "azure-ipam"
     },
     {
       "matchDatasources": ["docker"],
