@@ -99,7 +99,7 @@
       "reviewers": ["mainred"]
     },
     {
-      "matchPackageNames": ["oss/kubernetes-csi/*"],
+      "matchPackageNames": ["oss/kubernetes-csi/**"],
       "groupName": "csi",
       "assignees": ["andyzhangx"],
       "reviewers": ["andyzhangx"]
