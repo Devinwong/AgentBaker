@@ -253,14 +253,10 @@
       ],
       "groupName": "azure-cloud-node-manager",
       "assignees": [
-        "mainred",
-        "MartinForReal",
-        "nilo19"
+        "devinwong"
       ],
       "reviewers": [
-        "mainred",
-        "MartinForReal",
-        "nilo19"
+        "devinwong"
       ]
     },
     {
