@@ -11,6 +11,7 @@
   "recreateWhen": "never",
   "labels": ["renovate"],
   "rebaseWhen": "behind-base-branch",
+  "autoApprove": true,
   "updateNotScheduled": false,
   "schedule": [
     "after 10pm and before 5am every weekday",
