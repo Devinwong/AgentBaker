@@ -153,7 +153,9 @@
     },
     {
       "matchPackageNames": [
-        "containernetworking/cilium/cilium"
+        "azure-cni",
+        "containernetworking/azure-cni",
+        "containernetworking/azure-ipam"
       ],
       "groupName": "azure-cni-cilium-ipam",
       "reviewers": [
