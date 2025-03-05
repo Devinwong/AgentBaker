@@ -168,7 +168,7 @@
     },
     {
       "matchPackageNames": [
-        "containernetworking/cilium/cilium",
+        "containernetworking/cilium/cilium"
       ],
       "groupName": "azure-cni-cilium-ipam",
       "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9]+)?$/",
