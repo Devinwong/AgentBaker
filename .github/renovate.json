@@ -159,6 +159,7 @@
         "containernetworking/azure-ipam"
       ],
       "groupName": "azure-cni-cilium-ipam",
+      "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+-[0-9]+$/",
       "reviewers": [
         "team:acn-cni-reviewers"
       ],
