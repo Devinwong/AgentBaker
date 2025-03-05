@@ -171,7 +171,7 @@
         "containernetworking/cilium/cilium"
       ],
       "groupName": "azure-cni-cilium-ipam",
-      "versioning": "semver-coerced",
+      "versioning": "regex:^(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?(-(?<prerelease>.*))?$",
       "reviewers": [
         "team:acn-cni-reviewers"
       ],
