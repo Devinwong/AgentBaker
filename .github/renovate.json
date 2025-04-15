@@ -485,7 +485,7 @@
   ],
   "customDatasources": {
     "deb1804": {
-      "defaultRegistryUrlTemplate": "https://packages.microsoft.com/ubuntu/18.04/prod/dists/testing/bionic/binary-amd64/Packages",
+      "defaultRegistryUrlTemplate": "https://packages.microsoft.com/ubuntu/18.04/prod/dists/bionic/main/binary-amd64/Packages",
       "format": "plain",
       "transformTemplates": [
         "{\"releases\": $map(($index := releases#$i[version=\"Package: {{packageName}}\"].$i; $map($index, function($i) { $replace(releases[$i + 1].version, /^Version:\\s*/, \"v\") })), function($v) { {\"version\": $v} })}"
