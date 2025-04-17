@@ -74,36 +74,9 @@
     },
     {
       "matchDatasources": [
-        "custom.deb1804"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "automerge": false,
-      "enabled": true
-    },
-    {
-      "matchDatasources": [
-        "custom.deb2004"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "automerge": false,
-      "enabled": true
-    },
-    {
-      "matchDatasources": [
-        "custom.deb2204"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "automerge": false,
-      "enabled": true
-    },
-    {
-      "matchDatasources": [
+        "custom.deb1804",
+        "custom.deb2004",
+        "custom.deb2204",
         "custom.deb2404"
       ],
       "matchUpdateTypes": [
