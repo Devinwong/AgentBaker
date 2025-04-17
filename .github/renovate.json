@@ -21,6 +21,7 @@
   ],
   "updateNotScheduled": false,
   "timezone": "America/Los_Angeles",
+  "logLevel": "debug",
   "logLevelRemap": [
     {
       "matchMessage": "/^Custom manager fetcher/",
