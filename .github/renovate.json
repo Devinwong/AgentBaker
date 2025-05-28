@@ -55,7 +55,8 @@
         "oss/binaries/kubernetes/kubernetes-node",
         "oss/binaries/kubernetes/azure-acr-credential-provider",
         "oss/binaries/deislabs/containerd-wasm-shims",
-        "containernetworking/azure-npm"
+        "containernetworking/azure-npm",
+        "rpm"
       ],
       "matchUpdateTypes": [
         "minor"
@@ -88,9 +89,6 @@
     {
       "matchDatasources": [
         "rpm"
-      ],
-      "matchUpdateTypes": [
-        "patch"
       ],
       "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?(-(?<prerelease>.*))?$",
       "automerge": false,
