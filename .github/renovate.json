@@ -77,7 +77,8 @@
         "custom.deb1804",
         "custom.deb2004",
         "custom.deb2204",
-        "custom.deb2404"
+        "custom.deb2404",
+        "rpm"
       ],
       "matchUpdateTypes": [
         "patch"
