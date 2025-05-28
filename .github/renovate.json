@@ -453,6 +453,20 @@
     },
     {
       "customType": "regex",
+      "description": "auto update packages for OS AzureLinux 3.0 in components.json",
+      "fileMatch": [
+        "parts/common/components.json"
+      ],
+      "matchStringsStrategy": "any",
+      "matchStrings": [
+        "\"renovateTag\":\\s*\"name=(?<packageName>[^\"]+), os=azurelinux, release=3\\.0\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
+      ],
+      "datasourceTemplate": "rpm",
+      "registryUrl": "https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata/",
+      "autoReplaceStringTemplate": "\"renovateTag\": \"name={{{packageName}}}, os=azurelinux, release=3.0\",\n                \"latestVersion\": \"{{{newValue}}}\"{{#if depType}},\n                \"previousLatestVersion\": \"{{{currentValue}}}\"{{/if}}"
+    },
+    {
+      "customType": "regex",
       "description": "update version line in any cse_*.sh",
       "fileMatch": [
         "^.*cse_.*\\.sh"

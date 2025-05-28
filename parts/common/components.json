@@ -1273,8 +1273,8 @@
           "r2404": {
             "versionsV2": [
               {
-                "renovateTag": "name=kubernetes-cri-tools, os=ubuntu, release=24.04",
-                "latestVersion": "1.32.0-ubuntu24.04u3"
+                "renovateTag": "name=kubernetes-cri-tools, os=AzureLinux, release=3.0",
+                "latestVersion": "1.32.0-2.azl3"
               }
             ]
           }
