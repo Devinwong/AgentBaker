@@ -90,6 +90,7 @@
       "matchDatasources": [
         "rpm"
       ],
+      "versioning": "regex:(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?(-(?<prerelease>.*))?$",
       "automerge": false,
       "enabled": true
     },
