@@ -281,6 +281,30 @@
     },
     {
       "matchPackageNames": [
+        "kubernetes-cri-tools"
+      ],
+      "groupName": "kubernetes-cri-tools",
+      "assignees": [
+        "devinwong",
+        "anujmaheshwari1",
+        "cameronmeissner",
+        "lilypan26",
+        "djsly",
+        "zachary-bailey",
+        "ganeshkumarashok"
+      ],
+      "reviewers": [
+        "devinwong",
+        "anujmaheshwari1",
+        "cameronmeissner",
+        "lilypan26",
+        "djsly",
+        "zachary-bailey",
+        "ganeshkumarashok"
+      ]
+    },
+    {
+      "matchPackageNames": [
         "oss/kubernetes-csi/**"
       ],
       "groupName": "csi",
