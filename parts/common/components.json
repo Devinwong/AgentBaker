@@ -1104,8 +1104,8 @@
           "v3.0": {
             "versionsV2": [
               {
-                "renovateTag": "name=kubernetes-cri-tools, os=azurelinux, release=3.0",
-                "latestVersion": "2.0.0-6.azl3"
+                "renovateTag": "registry=https://packages.microsoft.com/azurelinux/3.0/prod/base/x86_64/repodata/, name=moby-containerd, os=azurelinux, release=3.0",
+                "latestVersion": "2.0.0-4.azl3"
               }
             ]
           }
@@ -1272,7 +1272,7 @@
           "current": {
             "versionsV2": [
               {
-                "renovateTag": "name=kubernetes-cri-tools, os=azurelinux, release=3.0",
+                "renovateTag": "registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata/, name=kubernetes-cri-tools, os=azurelinux, release=3.0",
                 "latestVersion": "1.32.0-2.azl3"
               }
             ]
