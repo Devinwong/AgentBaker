@@ -1104,7 +1104,7 @@
           "v3.0": {
             "versionsV2": [
               {
-                "renovateTag": "registry=https://packages.microsoft.com/azurelinux/3.0/prod/base/x86_64/repodata/, name=moby-containerd, os=azurelinux, release=3.0",
+                "renovateTag": "registry=https://packages.microsoft.com/azurelinux/3.0/prod/base/x86_64/repodata/, name=containerd, os=azurelinux, release=3.0",
                 "latestVersion": "2.0.0-4.azl3"
               }
             ]
