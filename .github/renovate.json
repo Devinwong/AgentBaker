@@ -491,7 +491,7 @@
         "\"renovateTag\":\\s*\"registry=(?<registryUrl>[^,]+), name=(?<packageName>[^\"]+), os=azurelinux, release=3\\.0\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
       ],
       "datasourceTemplate": "rpm",
-      "autoReplaceStringTemplate": "\"renovateTag\": \"name={{{packageName}}}, os=azurelinux, release=3.0\",\n                \"latestVersion\": \"{{{newValue}}}\"{{#if depType}},\n                \"previousLatestVersion\": \"{{{currentValue}}}\"{{/if}}"
+      "autoReplaceStringTemplate": "\"renovateTag\": \"registry={{{registryUrl}}}, \"name={{{packageName}}}, os=azurelinux, release=3.0\",\n                \"latestVersion\": \"{{{newValue}}}\"{{#if depType}},\n                \"previousLatestVersion\": \"{{{currentValue}}}\"{{/if}}"
     },
     {
       "customType": "regex",
