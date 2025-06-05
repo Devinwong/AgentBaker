@@ -8,7 +8,7 @@
           "current": {
             "versionsV2": [
               {
-                "renovateTag": "registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata/, name=kubernetes-cri-tools, os=azurelinux, release=3.0",
+                "renovateTag": "name=kubernetes-cri-tools, os=azurelinux, release=3.0",
                 "latestVersion": "1.32.0-2.azl3"
               }
             ]

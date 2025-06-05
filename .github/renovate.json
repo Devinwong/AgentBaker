@@ -488,9 +488,10 @@
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "\"renovateTag\":\\s*\"registry=(?<registryUrl>[^,]+), name=(?<packageName>[^,]+), os=azurelinux, release=3\\.0\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
+        "\"renovateTag\":\\s*\"name=(?<packageName>[^,]+), os=azurelinux, release=3\\.0\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
       ],
-      "datasourceTemplate": "rpm"
+      "datasourceTemplate": "rpm",
+      "autoReplaceStringTemplate": "\"renovateTag\": \"registry={{{registryUrl}}}, name={{{packageName}}}, os=azurelinux, release=3.0\",\n                \"latestVersion\": \"{{{newValue}}}\"{{#if depType}},\n                \"previousLatestVersion\": \"{{{currentValue}}}\"{{/if}}"
     },
     {
       "customType": "regex",
