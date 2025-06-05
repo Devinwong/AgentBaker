@@ -94,6 +94,7 @@
       "matchPackageNames": [
         "moby-runc",
         "moby-containerd",
+        "containerd2",
         "aks/aks-node-ca-watcher"
       ],
       "matchUpdateTypes": [
@@ -130,7 +131,8 @@
     {
       "matchPackageNames": [
         "moby-runc",
-        "moby-containerd"
+        "moby-containerd",
+        "containerd2"
       ],
       "matchUpdateTypes": [
         "minor"
