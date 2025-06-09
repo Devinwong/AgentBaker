@@ -1085,7 +1085,7 @@
             "versionsV2": [
               {
                 "renovateTag": "registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/base/x86_64/repodata, name=moby-containerd, os=mariner, release=2.0",
-                "latestVersion": "1.6.26-10.cm2"
+                "latestVersion": "1.6.26-11.cm2"
               }
             ]
           }
@@ -1105,7 +1105,7 @@
             "versionsV2": [
               {
                 "renovateTag": "registry=https://packages.microsoft.com/azurelinux/3.0/prod/base/x86_64/repodata, name=containerd2, os=azurelinux, release=3.0",
-                "latestVersion": "2.0.0-4.azl3"
+                "latestVersion": "2.0.0-8.azl3"
               }
             ]
           }
