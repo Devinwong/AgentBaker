@@ -1,6 +1,158 @@
 {
   "Packages": [
     {
+      "name": "containerd",
+      "downloadLocation": "/opt/containerd/downloads",
+      "windowsDownloadLocation": "c:\\akse-cache\\containerd\\",
+      "downloadURIs": {
+        "ubuntu": {
+          "r2404": {
+            "versionsV2": [
+              {
+                "renovateTag": "name=moby-containerd, os=ubuntu, release=24.04",
+                "latestVersion": "2.0.4-ubuntu24.04u1"
+              }
+            ]
+          },
+          "r2204": {
+            "versionsV2": [
+              {
+                "renovateTag": "name=moby-containerd, os=ubuntu, release=22.04",
+                "latestVersion": "1.7.27-ubuntu22.04u1"
+              }
+            ]
+          },
+          "r2004": {
+            "versionsV2": [
+              {
+                "renovateTag": "name=moby-containerd, os=ubuntu, release=20.04",
+                "latestVersion": "1.7.27-ubuntu20.04u1"
+              }
+            ]
+          },
+          "r1804": {
+            "versionsV2": [
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "1.7.1-1"
+              }
+            ]
+          }
+        },
+        "mariner": {
+          "current": {
+            "versionsV2": [
+              {
+                "renovateTag": "registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/base/x86_64/repodata, name=moby-containerd, os=mariner, release=2.0",
+                "latestVersion": "1.6.26-10.cm2"
+              }
+            ]
+          }
+        },
+        "marinerkata": {
+          "current": {
+            "versionsV2": [
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "<SKIP>"
+              }
+            ]
+          }
+        },
+        "azurelinux": {
+          "v3.0": {
+            "versionsV2": [
+              {
+                "renovateTag": "registry=https://packages.microsoft.com/azurelinux/3.0/prod/base/x86_64/repodata, name=containerd2, os=azurelinux, release=3.0",
+                "latestVersion": "2.0.0-4.azl3"
+              }
+            ]
+          }
+        },
+        "windows": {
+          "ws2019": {
+            "versionsV2": [
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "v1.6.35-azure.1"
+              },
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "v1.7.20-azure.1",
+                "previousLatestVersion": "v1.7.17-azure.1"
+              }
+            ],
+            "downloadURL": "https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"
+          },
+          "ws2022": {
+            "versionsV2": [
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "v1.6.35-azure.1"
+              },
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "v1.7.20-azure.1",
+                "previousLatestVersion": "v1.7.17-azure.1"
+              }
+            ],
+            "downloadURL": "https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"
+          },
+          "ws2025": {
+            "versionsV2": [
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "v2.0.4-azure.1"
+              }
+            ],
+            "downloadURL": "https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"
+          },
+          "default": {
+            "versionsV2": [
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "v1.7.20-azure.1",
+                "previousLatestVersion": "v1.7.17-azure.1"
+              }
+            ],
+            "downloadURL": "https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"
+          }
+        },
+        "default": {
+          "current": {
+            "versionsV2": [
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "1.7.20"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "cni-plugins",
+      "downloadLocation": "/opt/cni/downloads",
+      "downloadURIs": {
+        "windows": {
+          "default": {
+            "versionsV2": []
+          }
+        },
+        "default": {
+          "current": {
+            "versionsV2": [
+              {
+                "renovateTag": "<DO_NOT_UPDATE>",
+                "latestVersion": "1.6.2"
+              }
+            ],
+            "downloadURL": "https://packages.aks.azure.com/cni-plugins/v${version}/binaries/cni-plugins-linux-${CPU_ARCH}-v${version}.tgz"
+          }
+        }
+      }
+    },
+    {
       "name": "kubernetes-cri-tools",
       "downloadLocation": "/opt/crictl/downloads",
       "downloadURIs": {
