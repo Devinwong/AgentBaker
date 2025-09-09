@@ -548,6 +548,20 @@
     },
     {
       "customType": "regex",
+      "description": "auto update packages for OS ubuntu 24.04 (test registry) in components.json",
+      "managerFilePatterns": [
+        "/parts/common/components.json/"
+      ],
+      "matchStringsStrategy": "any",
+      "matchStrings": [
+        "\"renovateTag\":\\s*\"name=(?<packageName>[^\"]+), registry=test, os=ubuntu, release=24\\.04\",\\s*\"latestVersion\":\\s*\"(?<currentValue>[^\"]+)\"(?:[^}]*\"previousLatestVersion\":\\s*\"(?<depType>[^\"]+)\")?"
+      ],
+      "datasourceTemplate": "custom.deb2404-test",
+      "versioningTemplate": "deb",
+      "autoReplaceStringTemplate": "\"renovateTag\": \"name={{{packageName}}}, registry=test, os=ubuntu, release=24.04\",\n                \"latestVersion\": \"{{{newValue}}}\"{{#if depType}},\n                \"previousLatestVersion\": \"{{{currentValue}}}\"{{/if}}"
+    },
+    {
+      "customType": "regex",
       "description": "auto update packages for OS Mariner 2.0 in components.json",
       "fileMatch": [
         "parts/common/components.json"
@@ -601,6 +615,13 @@
     },
     "deb2404": {
       "defaultRegistryUrlTemplate": "https://packages.microsoft.com/ubuntu/24.04/prod/dists/testing/main/binary-amd64/Packages",
+      "format": "plain",
+      "transformTemplates": [
+        "{\"releases\": $map(($index := releases#$i[version=\"Package: {{packageName}}\"].$i; $map($index, function($i) { $substringAfter(releases[$i + 1].version, \"Version: \") })), function($v) { {\"version\": $v} })[]}"
+      ]
+    },
+    "deb2404-test": {
+      "defaultRegistryUrlTemplate": "https://packages.microsoft.com/ubuntu/24.04/prod/dists/noble/main/binary-amd64/Packages",
       "format": "plain",
       "transformTemplates": [
         "{\"releases\": $map(($index := releases#$i[version=\"Package: {{packageName}}\"].$i; $map($index, function($i) { $substringAfter(releases[$i + 1].version, \"Version: \") })), function($v) { {\"version\": $v} })[]}"

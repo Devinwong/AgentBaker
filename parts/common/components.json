@@ -981,7 +981,7 @@
           "r2404": {
             "versionsV2": [
               {
-                "renovateTag": "name=moby-containerd, os=ubuntu, release=24.04",
+                "renovateTag": "name=moby-containerd, registry=test, os=ubuntu, release=24.04",
                 "latestVersion": "2.1.4-ubuntu24.04u1"
               }
             ]
