@@ -245,6 +245,17 @@
     },
     {
       "matchPackageNames": [
+        "oss/v2/azure/ip-masq-agent-v2"
+      ],
+      "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?(-(?<prerelease>.*))?$",
+      "ignoreUnstable": false,
+      "reviewers": [
+      ],
+      "assignees": [
+      ]
+    },
+    {
+      "matchPackageNames": [
         "containernetworking/cilium/cilium"
       ],
       "groupName": "azure-cni-cilium-ipam",
@@ -461,9 +472,7 @@
       "matchPackageNames": [
         "oss/binaries/kubernetes/kubernetes-node",
         "oss/binaries/kubernetes/azure-acr-credential-provider",
-        "oss/v2/azure/ip-masq-agent-v2"
       ],
-      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<prerelease>\\d+)$",
       "extractVersion": "^(?P<version>.*?)-[^-]*-[^-]*$"
     },
     {
