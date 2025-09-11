@@ -460,7 +460,8 @@
       ],
       "matchPackageNames": [
         "oss/binaries/kubernetes/kubernetes-node",
-        "oss/binaries/kubernetes/azure-acr-credential-provider"
+        "oss/binaries/kubernetes/azure-acr-credential-provider",
+        "oss/v2/azure/ip-masq-agent-v2"
       ],
       "extractVersion": "^(?P<version>.*?)-[^-]*-[^-]*$"
     },
