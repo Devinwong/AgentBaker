@@ -248,8 +248,7 @@
       "matchPackageNames": [
         "oss/v2/azure/ip-masq-agent-v2"
       ],
-      "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?(-(?<prerelease>.*))?$",
-      "extractVersion": "^(?P<version>v?\\d+\\.\\d+\\.\\d+(?:-\\d+)?)(?:-.*)?$",
+      "versioning": "regex:^(?<version>v?\\d+\\.\\d+\\.\\d+(?:-\\d+)?)$",      
       "ignoreUnstable": false,
       "reviewers": [
       ],
