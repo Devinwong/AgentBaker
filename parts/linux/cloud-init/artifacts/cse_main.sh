@@ -72,13 +72,6 @@ function basePrep {
     resolve_packages_source_url
     logs_to_events "AKS.CSE.setPackagesBaseURL" "echo $PACKAGE_DOWNLOAD_BASE_URL"
 
-    # IMPORTANT NOTE: We do this here since this function can mutate kubelet flags and node labels,
-    # which is used by configureK8s and other functions. Thus, we need to make sure flag and label content is correct beforehand.
-    logs_to_events "AKS.CSE.configureKubeletServing" configureKubeletServing
-
-    # This function first creates the systemd drop-in directory for kubelet.service.
-    # Pay attention to ordering relative to other functions that create kubelet drop-ins.
-    logs_to_events "AKS.CSE.configureK8s" configureK8s
 
     # This function creates the /etc/kubernetes/azure.json file. It also creates the custom
     # cloud configuration file if running in a custom cloud environment.
@@ -155,7 +148,7 @@ function basePrep {
     if ! isAzureLinuxOSGuard "$OS" "$OS_VARIANT"; then
         logs_to_events "AKS.CSE.installContainerRuntime" installContainerRuntime
     fi
-    if [ "${NEEDS_CONTAINERD}" = "true" ] && [ "${TELEPORT_ENABLED}" = "true" ]; then
+    if [ "${TELEPORT_ENABLED}" = "true" ]; then
         logs_to_events "AKS.CSE.installTeleportdPlugin" installTeleportdPlugin
     fi
 
@@ -197,12 +190,8 @@ function basePrep {
         logs_to_events "AKS.CSE.configureSystemdUseDomains" configureSystemdUseDomains
     fi
 
-    if [ "${NEEDS_CONTAINERD}" = "true" ]; then
-        # containerd should not be configured until cni has been configured first
-        logs_to_events "AKS.CSE.ensureContainerd" ensureContainerd
-    else
-        logs_to_events "AKS.CSE.ensureDocker" ensureDocker
-    fi
+    # containerd should not be configured until cni has been configured first
+    logs_to_events "AKS.CSE.ensureContainerd" ensureContainerd
 
     if [ -n "${MESSAGE_OF_THE_DAY}" ]; then
         if isMarinerOrAzureLinux "$OS" && [ -f /etc/dnf/automatic.conf ]; then
@@ -242,29 +231,27 @@ Environment="KUBELET_CGROUP_FLAGS=--cgroup-driver=systemd"
 EOF
     fi
 
-    if [ "${NEEDS_CONTAINERD}" = "true" ]; then
-        # gross, but the backticks make it very hard to do in Go
-        # TODO: move entirely into vhd.
-        # alternatively, can we verify this is safe with docker?
-        # or just do it even if not because docker is out of support?
-        mkdir -p /etc/containerd
-        echo "${KUBENET_TEMPLATE}" | base64 -d > /etc/containerd/kubenet_template.conf
+    # gross, but the backticks make it very hard to do in Go
+    # TODO: move entirely into vhd.
+    # alternatively, can we verify this is safe with docker?
+    # or just do it even if not because docker is out of support?
+    mkdir -p /etc/containerd
+    echo "${KUBENET_TEMPLATE}" | base64 -d > /etc/containerd/kubenet_template.conf
 
-        # In k8s 1.27, the flag --container-runtime was removed.
-        # We now have 2 drop-in's, one with the still valid flags that will be applied to all k8s versions,
-        # the flags are --runtime-request-timeout, --container-runtime-endpoint, --runtime-cgroups
-        # For k8s >= 1.27, the flag --container-runtime will not be passed.
-        tee "/etc/systemd/system/kubelet.service.d/10-containerd-base-flag.conf" > /dev/null <<'EOF'
+    # In k8s 1.27, the flag --container-runtime was removed.
+    # We now have 2 drop-in's, one with the still valid flags that will be applied to all k8s versions,
+    # the flags are --runtime-request-timeout, --container-runtime-endpoint, --runtime-cgroups
+    # For k8s >= 1.27, the flag --container-runtime will not be passed.
+    tee "/etc/systemd/system/kubelet.service.d/10-containerd-base-flag.conf" > /dev/null <<'EOF'
 [Service]
 Environment="KUBELET_CONTAINERD_FLAGS=--runtime-request-timeout=15m --container-runtime-endpoint=unix:///run/containerd/containerd.sock --runtime-cgroups=/system.slice/containerd.service"
 EOF
 
-        if ! semverCompare ${KUBERNETES_VERSION:-"0.0.0"} "1.27.0"; then
-            tee "/etc/systemd/system/kubelet.service.d/10-container-runtime-flag.conf" > /dev/null <<'EOF'
+    if ! semverCompare ${KUBERNETES_VERSION:-"0.0.0"} "1.27.0"; then
+        tee "/etc/systemd/system/kubelet.service.d/10-container-runtime-flag.conf" > /dev/null <<'EOF'
 [Service]
 Environment="KUBELET_CONTAINER_RUNTIME_FLAG=--container-runtime=remote"
 EOF
-        fi
     fi
 
     if [ "${HAS_KUBELET_DISK_TYPE}" = "true" ]; then
@@ -277,7 +264,7 @@ EOF
 
     logs_to_events "AKS.CSE.ensureSysctl" ensureSysctl || exit $ERR_SYSCTL_RELOAD
 
-    if [ "${NEEDS_CONTAINERD}" = "true" ] && [ "${SHOULD_CONFIG_CONTAINERD_ULIMITS}" = "true" ]; then
+    if [ "${SHOULD_CONFIG_CONTAINERD_ULIMITS}" = "true" ]; then
       logs_to_events "AKS.CSE.setContainerdUlimits" configureContainerdUlimits
     fi
 
@@ -316,12 +303,6 @@ EOF
         createManDbAutoUpdateFlagFile
         /usr/bin/mandb && echo "man-db finished updates at $(date)" &
     fi
-
-    if [ "${NEEDS_DOCKER_LOGIN}" = "true" ]; then
-        set +x
-        docker login -u $SERVICE_PRINCIPAL_CLIENT_ID -p $SERVICE_PRINCIPAL_CLIENT_SECRET "${AZURE_PRIVATE_REGISTRY_SERVER}"
-        set -x
-    fi
 }
 
 # ====== NODE PREP: CLUSTER INTEGRATION ======
@@ -329,6 +310,14 @@ EOF
 # After this stage the node should be fully integrated into the cluster.
 # IMPORTANT: This stage should only run when actually joining a node to the cluster. This step should not be run when creating a VHD image
 function nodePrep {
+    # IMPORTANT NOTE: We do this here since this function can mutate kubelet flags and node labels,
+    # which is used by configureK8s and other functions. Thus, we need to make sure flag and label content is correct beforehand.
+    logs_to_events "AKS.CSE.configureKubeletServing" configureKubeletServing
+
+    # This function first creates the systemd drop-in directory for kubelet.service.
+    # Pay attention to ordering relative to other functions that create kubelet drop-ins.
+    logs_to_events "AKS.CSE.configureK8s" configureK8s
+
     if [ "${ENABLE_SECURE_TLS_BOOTSTRAPPING}" = "true" ]; then
         # Depends on configureK8s, ensureKubeCACert, and installSecureTLSBootstrapClient
         logs_to_events "AKS.CSE.configureAndStartSecureTLSBootstrapping" configureAndStartSecureTLSBootstrapping
@@ -402,47 +391,21 @@ function nodePrep {
             # we couldn't because of old drivers but that has long been fixed.
             logs_to_events "AKS.CSE.ensureMigPartition" ensureMigPartition
         fi
-
-        # Configure GPU device plugin
-        if [ "${ENABLE_GPU_DEVICE_PLUGIN_IF_NEEDED}" = "true" ]; then
-            # Ensure kubelet device-plugins directory exists BEFORE package installation
-            mkdir -p /var/lib/kubelet/device-plugins
-            
-            # Install nvidia-device-plugin if needed and not already installed
-            if ! systemctl list-unit-files | grep -q "nvidia-device-plugin.service"; then
-                echo "Installing nvidia-device-plugin package..."
-                logs_to_events "AKS.CSE.installNvidiaDevicePlugin" "installNvidiaDevicePluginPkgFromCache"
-            else
-                echo "nvidia-device-plugin package already installed"
-            fi
-            
-            # Create systemd override directory and fix binary path
-            mkdir -p /etc/systemd/system/nvidia-device-plugin.service.d/
-            tee "/etc/systemd/system/nvidia-device-plugin.service.d/10-binary-path.conf" > /dev/null <<'EOF'
-[Service]
-ExecStart=
-ExecStart=/usr/local/bin/nvidia-device-plugin
-EOF
-            # Reload systemd to pick up the base path override
-            systemctl daemon-reload
-            
-            if [ "${MIG_NODE}" = "true" ]; then
-                tee "/etc/systemd/system/nvidia-device-plugin.service.d/10-mig_strategy.conf" > /dev/null <<'EOF'
-[Service]
-Environment="MIG_STRATEGY=--mig-strategy single"
-ExecStart=
-ExecStart=/usr/local/bin/nvidia-device-plugin $MIG_STRATEGY
-EOF
-                # Reload systemd to pick up drop-ins
-                systemctl daemon-reload
-            fi
-            
-            logs_to_events "AKS.CSE.start.nvidia-device-plugin" "systemctlEnableAndStart nvidia-device-plugin 30" || exit $ERR_GPU_DEVICE_PLUGIN_START_FAIL
-        else
-            logs_to_events "AKS.CSE.stop.nvidia-device-plugin" "systemctlDisableAndStop nvidia-device-plugin"
-        fi
-
         echo $(date),$(hostname), "End configuring GPU drivers"
+    fi
+
+    export -f enableManagedGPUExperience
+    ENABLE_MANAGED_GPU_EXPERIENCE=$(retrycmd_silent 10 1 10 bash -cx enableManagedGPUExperience)
+    if [ "$?" -ne 0 ] && [ "${GPU_NODE}" = "true" ] && [ "${skip_nvidia_driver_install}" != "true" ]; then
+        echo "failed to determine if managed GPU experience should be enabled by nodepool tags"
+        exit $ERR_LOOKUP_ENABLE_MANAGED_GPU_EXPERIENCE_TAG
+    elif [ "${GPU_NODE}" = "true" ] && [ "${skip_nvidia_driver_install}" != "true" ] && [ "${ENABLE_MANAGED_GPU_EXPERIENCE}" = "true" ]; then
+        logs_to_events "AKS.CSE.installNvidiaManagedExpPkgFromCache" "installNvidiaManagedExpPkgFromCache" || exit $ERR_NVIDIA_DCGM_INSTALL
+        logs_to_events "AKS.CSE.startNvidiaManagedExpServices" "startNvidiaManagedExpServices" || exit $ERR_NVIDIA_DCGM_EXPORTER_FAIL
+    elif [ "${GPU_NODE}" = "true" ] && [ "${skip_nvidia_driver_install}" != "true" ] && [ "${ENABLE_MANAGED_GPU_EXPERIENCE}" = "false" ]; then
+        logs_to_events "AKS.CSE.stop.nvidia-device-plugin" "systemctlDisableAndStop nvidia-device-plugin"
+        logs_to_events "AKS.CSE.stop.nvidia-dcgm" "systemctlDisableAndStop nvidia-dcgm"
+        logs_to_events "AKS.CSE.stop.nvidia-dcgm-exporter" "systemctlDisableAndStop nvidia-dcgm-exporter"
     fi
 
     VALIDATION_ERR=0

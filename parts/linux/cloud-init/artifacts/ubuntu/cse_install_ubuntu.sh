@@ -1,11 +1,5 @@
 #!/bin/bash
 
-K8S_DEVICE_PLUGIN_PKG="${K8S_DEVICE_PLUGIN_PKG:-nvidia-device-plugin}"
-
-removeMoby() {
-    apt_get_purge 10 5 300 moby-engine moby-cli
-}
-
 removeContainerd() {
     apt_get_purge 10 5 300 moby-containerd
 }
@@ -18,13 +12,13 @@ installDeps() {
     aptmarkWALinuxAgent hold
     apt_get_update || exit $ERR_APT_UPDATE_TIMEOUT
 
-    pkg_list=(bind9-dnsutils ca-certificates ceph-common cgroup-lite cifs-utils conntrack cracklib-runtime ebtables ethtool glusterfs-client htop init-system-helpers inotify-tools iotop iproute2 ipset iptables nftables jq libpam-pwquality libpwquality-tools mount nfs-common pigz socat sysfsutils sysstat util-linux xz-utils netcat-openbsd zip rng-tools kmod gcc make dkms initramfs-tools linux-headers-$(uname -r) linux-modules-extra-$(uname -r))
+    pkg_list=(apparmor-utils bind9-dnsutils ca-certificates ceph-common cgroup-lite cifs-utils conntrack cracklib-runtime ebtables ethtool glusterfs-client htop init-system-helpers inotify-tools iotop iproute2 ipset iptables nftables jq libpam-pwquality libpwquality-tools mount nfs-common pigz socat sysfsutils sysstat util-linux xz-utils netcat-openbsd zip rng-tools kmod gcc make dkms initramfs-tools linux-headers-$(uname -r) linux-modules-extra-$(uname -r))
 
     local OSVERSION
     OSVERSION=$(grep DISTRIB_RELEASE /etc/*-release| cut -f 2 -d "=")
     BLOBFUSE_VERSION="1.4.5"
     # Blobfuse2 has been upgraded in upstream, using this version for parity between 22.04 and 24.04
-    BLOBFUSE2_VERSION="2.5.0"
+    BLOBFUSE2_VERSION="2.5.1"
 
     # blobfuse2 is installed for all ubuntu versions, it is included in pkg_list
     # for 22.04, fuse3 is installed. for all others, fuse is installed
@@ -78,38 +72,91 @@ updateAptWithMicrosoftPkg() {
     apt_get_update || exit $ERR_APT_UPDATE_TIMEOUT
 }
 
-cleanUpGPUDrivers() {
-    rm -Rf $GPU_DEST /opt/gpu
-    rm -rf "/opt/${K8S_DEVICE_PLUGIN_PKG}/downloads"
+updateAptWithNvidiaPkg() {
+    readonly nvidia_gpg_keyring_path="/etc/apt/keyrings/nvidia.pub"
+    mkdir -p "$(dirname "${nvidia_gpg_keyring_path}")"
+
+    readonly nvidia_sources_list_path="/etc/apt/sources.list.d/nvidia.list"
+    local cpu_arch=$(getCPUArch)  # Returns amd64 or arm64
+    local repo_arch=""
+    local nvidia_ubuntu_release=""
+
+    if [ "$cpu_arch" = "amd64" ]; then
+        repo_arch="x86_64"
+    elif [ "$cpu_arch" = "arm64" ]; then
+        repo_arch="sbsa"
+    else
+        echo "Unknown CPU architecture: ${cpu_arch}"
+        return
+    fi
+
+    if [ "${UBUNTU_RELEASE}" = "22.04" ]; then
+        nvidia_ubuntu_release="ubuntu2204"
+    elif [ "${UBUNTU_RELEASE}" = "24.04" ]; then
+        nvidia_ubuntu_release="ubuntu2404"
+    else
+        echo "NVIDIA repo setup is not supported on Ubuntu ${UBUNTU_RELEASE}"
+        return
+    fi
+
+    # Construct URLs based on detected architecture and Ubuntu version
+    echo "deb [arch=${cpu_arch} signed-by=${nvidia_gpg_keyring_path}] https://developer.download.nvidia.com/compute/cuda/repos/${nvidia_ubuntu_release}/${repo_arch} /" > ${nvidia_sources_list_path}
+
+    # Add NVIDIA repository
+    local nvidia_gpg_key_url="https://developer.download.nvidia.com/compute/cuda/repos/${nvidia_ubuntu_release}/${repo_arch}/3bf863cc.pub"
+
+    # Download and add the GPG key for the NVIDIA repository
+    retrycmd_curl_file 120 5 25 ${nvidia_gpg_keyring_path} ${nvidia_gpg_key_url} || exit $ERR_NVIDIA_GPG_KEY_DOWNLOAD_TIMEOUT
+    apt_get_update || exit $ERR_APT_UPDATE_TIMEOUT
 }
 
-installNvidiaDevicePluginPkgFromCache() {
-    local os=${UBUNTU_OS_NAME}
-    if [ -z "$UBUNTU_RELEASE" ]; then
-        echo "ERROR: UBUNTU_RELEASE is not set, cannot determine nvidia-device-plugin version" >&2
-        exit $ERR_GPU_DEVICE_PLUGIN_START_FAIL
+isPackageInstalled() {
+    local packageName="${1}"
+    if dpkg -l "${packageName}" 2>/dev/null | grep -q "^ii"; then
+        return 0  # Package is installed
+    else
+        return 1  # Package is not installed
     fi
-    local os_version="${UBUNTU_RELEASE}"
+}
 
-    # Get nvidia-device-plugin package info from components.json
-    local package=$(jq -r ".Packages[] | select(.name == \"${K8S_DEVICE_PLUGIN_PKG}\")" "${COMPONENTS_FILEPATH}")
+managedGPUPackageList() {
+    packages=(
+        nvidia-device-plugin
+        datacenter-gpu-manager-4-core
+        datacenter-gpu-manager-4-proprietary
+        datacenter-gpu-manager-exporter
+    )
+    echo "${packages[@]}"
+}
 
-    # Get the latest package version
-    updatePackageVersions "${package}" "${os}" "${os_version}"
-    if [ ${#PACKAGE_VERSIONS[@]} -eq 0 ]; then
-        echo "ERROR: No nvidia-device-plugin versions found" >&2
-        exit $ERR_GPU_DEVICE_PLUGIN_START_FAIL
-    fi
+installNvidiaManagedExpPkgFromCache() {
+    # Ensure kubelet device-plugins directory exists BEFORE package installation
+    mkdir -p /var/lib/kubelet/device-plugins
 
-    # Use the first (latest) version
-    local packageVersion="${PACKAGE_VERSIONS[0]}"
-    echo "installing ${K8S_DEVICE_PLUGIN_PKG} package version: $packageVersion"
+    for packageName in $(managedGPUPackageList); do
+        downloadDir="/opt/${packageName}/downloads"
+        if isPackageInstalled "${packageName}"; then
+            echo "${packageName} is already installed, skipping."
+            rm -rf $(dirname ${downloadDir})
+            continue
+        fi
 
-    # For nvidia-device-plugin, strip the Ubuntu-specific suffix from version
-    # e.g., "0.17.4-ubuntu24.04u1" -> "0.17.4"
-    local baseVersion=$(echo "${packageVersion}" | sed 's/-ubuntu[0-9.]*u[0-9]*//')
-    echo "using base version ${baseVersion} for ${K8S_DEVICE_PLUGIN_PKG} package filename"
-    installPkgWithAptGet "${K8S_DEVICE_PLUGIN_PKG}" "${baseVersion}" || exit $ERR_GPU_DEVICE_PLUGIN_START_FAIL
+        debFile=$(find "${downloadDir}" -maxdepth 1 -name "${packageName}*" -print -quit 2>/dev/null) || debFile=""
+        if [ -z "${debFile}" ]; then
+            echo "Failed to locate ${packageName} deb"
+            exit $ERR_MANAGED_NVIDIA_EXP_INSTALL_FAIL
+        fi
+        logs_to_events "AKS.CSE.install${packageName}.installDebPackageFromFile" "installDebPackageFromFile ${debFile}" || exit $ERR_APT_INSTALL_TIMEOUT
+        rm -rf $(dirname ${downloadDir})
+    done
+}
+
+cleanUpGPUDrivers() {
+    rm -Rf $GPU_DEST /opt/gpu
+
+    for packageName in $(managedGPUPackageList); do
+        rm -rf "/opt/${packageName}"
+    done
 }
 
 installCriCtlPackage() {
@@ -146,6 +193,33 @@ installKubeletKubectlPkgFromPMC() {
     k8sVersion="${1}"
     installPkgWithAptGet "kubelet" "${k8sVersion}" || exit $ERR_KUBELET_INSTALL_FAIL
     installPkgWithAptGet "kubectl" "${k8sVersion}" || exit $ERR_KUBECTL_INSTALL_FAIL
+}
+
+installToolFromLocalRepo() {
+    local tool_name=$1
+    local tool_download_dir=$2
+    local installation_root=$3
+
+    # Verify the download directory exists and contains repository metadata
+    if [ ! -d "${tool_download_dir}" ]; then
+        echo "Download directory ${tool_download_dir} does not exist"
+        return 1
+    fi
+
+    # Check if this is a self-contained local repository (has Packages.gz)
+    if [ ! -f "${tool_download_dir}/Packages.gz" ]; then
+        echo "Packages.gz not found in ${tool_download_dir}, not a valid local repository"
+        return 1
+    fi
+
+    echo "Installing ${tool_name} from local repository at ${tool_download_dir}..."
+    if ! apt_get_install_from_local_repo "${tool_download_dir}" "${tool_name}" "${installation_root}"; then
+        echo "Failed to install ${tool_name} from local repository"
+        return 1
+    fi
+
+    echo "${tool_name} installed successfully from local repository"
+    return 0
 }
 
 installPkgWithAptGet() {
@@ -185,7 +259,9 @@ downloadPkgFromVersion() {
     downloadDir="${3:-"/opt/${packageName}/downloads"}"
     mkdir -p ${downloadDir}
     apt_get_download 20 30 ${packageName}=${packageVersion} || exit $ERR_APT_INSTALL_TIMEOUT
-    cp -al ${APT_CACHE_DIR}${packageName}_${packageVersion}* ${downloadDir}/ || exit $ERR_APT_INSTALL_TIMEOUT
+    # Strip epoch (e.g., 1:4.4.1-1 -> 4.4.1-1)
+    version_no_epoch="${packageVersion#*:}"
+    cp -al "${APT_CACHE_DIR}/${packageName}_${version_no_epoch}"* "${downloadDir}/" || exit $ERR_APT_INSTALL_TIMEOUT
     echo "Succeeded to download ${packageName} version ${packageVersion}"
 }
 
@@ -209,7 +285,6 @@ installContainerdFromOverride() {
     echo "Installing containerd from user input: ${containerdOverrideDownloadURL}"
     # we'll use a user-defined containerd package to install containerd even though it's the same version as
     # the one already installed on the node considering the source is built by the user for hotfix or test
-    logs_to_events "AKS.CSE.installContainerRuntime.removeMoby" removeMoby
     logs_to_events "AKS.CSE.installContainerRuntime.removeContainerd" removeContainerd
     logs_to_events "AKS.CSE.installContainerRuntime.downloadContainerdFromURL" downloadContainerdFromURL "${containerdOverrideDownloadURL}"
     logs_to_events "AKS.CSE.installContainerRuntime.installDebPackageFromFile" "installDebPackageFromFile ${CONTAINERD_DEB_FILE}" || exit $ERR_CONTAINERD_INSTALL_TIMEOUT
@@ -241,7 +316,6 @@ installContainerdWithAptGet() {
         echo "currently installed containerd version ${currentVersion} matches major.minor with higher patch ${containerdMajorMinorPatchVersion}. skipping installStandaloneContainerd."
     else
         echo "installing containerd version ${containerdMajorMinorPatchVersion}"
-        logs_to_events "AKS.CSE.installContainerRuntime.removeMoby" removeMoby
         logs_to_events "AKS.CSE.installContainerRuntime.removeContainerd" removeContainerd
 
         # if containerd version has been overriden then there should exist a local .deb file for it on aks VHDs (best-effort)
@@ -316,24 +390,6 @@ downloadContainerdFromURL() {
     CONTAINERD_DEB_FILE="$CONTAINERD_DOWNLOADS_DIR/${CONTAINERD_DEB_TMP}"
 }
 
-installMoby() {
-    ensureRunc ${RUNC_VERSION:-""} # RUNC_VERSION is an optional override supplied via NodeBootstrappingConfig api
-    CURRENT_VERSION=$(dockerd --version | grep "Docker version" | cut -d "," -f 1 | cut -d " " -f 3 | cut -d "+" -f 1)
-    local MOBY_VERSION="19.03.14"
-    local MOBY_CONTAINERD_VERSION="1.4.13"
-    if semverCompare ${CURRENT_VERSION:-"0.0.0"} ${MOBY_VERSION}; then
-        echo "currently installed moby-docker version ${CURRENT_VERSION} is greater than (or equal to) target base version ${MOBY_VERSION}. skipping installMoby."
-    else
-        removeMoby
-        updateAptWithMicrosoftPkg
-        MOBY_CLI=${MOBY_VERSION}
-        if [ "${MOBY_CLI}" = "3.0.4" ]; then
-            MOBY_CLI="3.0.3"
-        fi
-        apt_get_install 20 30 120 moby-engine=${MOBY_VERSION}* moby-cli=${MOBY_CLI}* moby-containerd=${MOBY_CONTAINERD_VERSION}* --allow-downgrades || exit $ERR_MOBY_INSTALL_TIMEOUT
-    fi
-}
-
 ensureRunc() {
     RUNC_PACKAGE_URL=${2:-""}
     RUNC_DOWNLOADS_DIR=${3:-$RUNC_DOWNLOADS_DIR}
@@ -395,6 +451,32 @@ ensureRunc() {
     fi
     echo "No cached runc deb file is found. Using apt-get to install runc."
     apt_get_install 20 30 120 moby-runc=${TARGET_VERSION}* --allow-downgrades || exit $ERR_RUNC_INSTALL_TIMEOUT
+}
+
+getOsVersion() {
+    # Ubuntu-specific implementation using lsb_release or DISTRIB_RELEASE
+    if [ -n "$UBUNTU_RELEASE" ]; then
+        echo "$UBUNTU_RELEASE"
+        return 0
+    fi
+
+    # Try lsb_release first
+    local version=$(lsb_release -r -s 2>/dev/null || echo "")
+    if [ -n "$version" ]; then
+        echo "$version"
+        return 0
+    fi
+
+    # Fallback to DISTRIB_RELEASE
+    local distrib_release=$(grep DISTRIB_RELEASE /etc/*-release 2>/dev/null | cut -f 2 -d "=" | head -n1)
+    if [ -n "$distrib_release" ]; then
+        echo "$distrib_release"
+        return 0
+    fi
+
+    # Error: OS version not found
+    echo "Error: Unable to determine OS version" >&2
+    return 1
 }
 
 #EOF

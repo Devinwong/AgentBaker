@@ -604,12 +604,11 @@ func (a *AzureClient) replicateImageVersionToCurrentRegion(ctx context.Context, 
 }
 
 func (a *AzureClient) EnsureSIGImageVersion(ctx context.Context, image *Image, location string) (VHDResourceID, error) {
-	logf(ctx, "Looking up gallery images for subcription %s", image.Gallery.SubscriptionID)
 	galleryImageVersion, err := armcompute.NewGalleryImageVersionsClient(image.Gallery.SubscriptionID, a.Credential, a.ArmOptions)
 	if err != nil {
 		return "", fmt.Errorf("create a new images client: %v", err)
 	}
-	logf(ctx, "Looking up images for gallery subscription %s resource group %s gallery name %s image name %s ersion %s ",
+	logf(ctx, "Looking up images for gallery subscription %s resource group %s gallery name %s image name %s version %s ",
 		image.Gallery.SubscriptionID,
 		image.Gallery.ResourceGroupName,
 		image.Gallery.Name,
@@ -620,8 +619,6 @@ func (a *AzureClient) EnsureSIGImageVersion(ctx context.Context, image *Image, l
 	if err != nil {
 		return "", fmt.Errorf("getting live image version info: %w", err)
 	}
-
-	logf(ctx, "Found image with id %s", *resp.ID)
 
 	liveVersion := &resp.GalleryImageVersion
 	if *liveVersion.Properties.ProvisioningState != armcompute.GalleryProvisioningStateSucceeded && *liveVersion.Properties.ProvisioningState != armcompute.GalleryProvisioningStateUpdating {

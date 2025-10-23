@@ -317,7 +317,7 @@ func waitForVMPrivateIP(ctx context.Context, s *Scenario) (string, error) {
 	}
 }
 
-func skipTestIfSKUNotAvailableErr(t *testing.T, err error) {
+func skipTestIfSKUNotAvailableErr(t testing.TB, err error) {
 	// sometimes the SKU is not available and we can't do anything. Skip the test in this case.
 	var respErr *azcore.ResponseError
 	if config.Config.SkipTestsWithSKUCapacityIssue &&
@@ -443,7 +443,7 @@ func extractLogsFromVMLinux(ctx context.Context, s *Scenario) error {
 
 	var logFiles = map[string]string{}
 	for file, sourceCmd := range commandList {
-		execResult, err := execBashCommandOnVM(ctx, s, privateIP, pod.Name, sourceCmd)
+		execResult, err := execScriptOnVm(ctx, s, privateIP, pod.Name, sourceCmd)
 		if err != nil {
 			s.T.Logf("error executing %s: %s", sourceCmd, err)
 			continue
@@ -455,14 +455,6 @@ func extractLogsFromVMLinux(ctx context.Context, s *Scenario) error {
 		return fmt.Errorf("failed to dump log files: %w", err)
 	}
 	return nil
-}
-
-func execBashCommandOnVM(ctx context.Context, s *Scenario, vmPrivateIP, jumpboxPodName, command string) (*podExecResult, error) {
-	script := Script{
-		interpreter: Bash,
-		script:      command,
-	}
-	return execScriptOnVm(ctx, s, vmPrivateIP, jumpboxPodName, script)
 }
 
 const uploadLogsPowershellScript = `
@@ -536,8 +528,7 @@ func extractLogsFromVMWindows(ctx context.Context, s *Scenario) {
 		config.Config.BlobStorageAccount(),
 	)
 
-	s.T.Logf("Storage account %s in Azure portal: %s", blobPrefix, azurePortalURL)
-	s.T.Logf("##vso[task.logissue type=warning;]Storage account %s in Azure portal: %s", blobPrefix, azurePortalURL)
+	s.T.Logf("##vso[task.logissue type=warning;]Storage account %s (%s) in Azure portal: %s", config.Config.BlobStorageAccount(), blobPrefix, azurePortalURL)
 
 	runCommandTimeout := int32((20 * time.Minute).Seconds())
 	s.T.Logf("run command timeout: %d", runCommandTimeout)
@@ -742,7 +733,7 @@ func getNewRSAKeyPair() (privatePEMBytes []byte, publicKeyBytes []byte, e error)
 	return
 }
 
-func generateVMSSNameLinux(t *testing.T) string {
+func generateVMSSNameLinux(t testing.TB) string {
 	name := fmt.Sprintf("%s-%s-%s", randomLowercaseString(4), time.Now().Format(time.DateOnly), t.Name())
 	name = strings.ReplaceAll(name, "_", "")
 	name = strings.ReplaceAll(name, "/", "")

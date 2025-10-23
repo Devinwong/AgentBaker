@@ -419,7 +419,6 @@ func TestAKSNodeConfigCompatibilityFromJsonToCSECommand(t *testing.T) {
 				assert.Equal(t, "", vars["THP_DEFRAG"])
 				assert.Equal(t, "false", vars["DISABLE_SSH"])
 				assert.Equal(t, "true", vars["IS_VHD"])
-				assert.Equal(t, "false", vars["NEEDS_DOCKER_LOGIN"])
 				assert.Equal(t, "", vars["MOBY_VERSION"])
 				assert.Equal(t, "", vars["LOAD_BALANCER_SKU"])
 				assert.Equal(t, "", vars["NETWORK_POLICY"])
@@ -436,6 +435,12 @@ func TestAKSNodeConfigCompatibilityFromJsonToCSECommand(t *testing.T) {
 				assert.Equal(t, "", vars["NO_PROXY"])
 				assert.Equal(t, "", vars["PROXY_TRUSTED_CA"])
 				assert.Equal(t, helpers.DefaultCloudName, vars["TARGET_ENVIRONMENT"])
+				assert.Equal(t, "", vars["TLS_BOOTSTRAP_TOKEN"])
+				assert.Equal(t, "false", vars["ENABLE_SECURE_TLS_BOOTSTRAPPING"])
+				assert.Equal(t, "", vars["SECURE_TLS_BOOTSTRAPPING_DEADLINE"])
+				assert.Equal(t, "", vars["SECURE_TLS_BOOTSTRAPPING_AAD_RESOURCE"])
+				assert.Equal(t, "", vars["SECURE_TLS_BOOTSTRAPPING_USER_ASSIGNED_IDENTITY_ID"])
+				assert.Equal(t, "", vars["CUSTOM_SECURE_TLS_BOOTSTRAPPING_CLIENT_URL"])
 			},
 		},
 	}

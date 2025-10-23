@@ -145,9 +145,11 @@ func (k *Kubeclient) WaitUntilPodRunning(ctx context.Context, namespace string, 
 	return pod, err
 }
 
-func (k *Kubeclient) WaitUntilNodeReady(ctx context.Context, t *testing.T, vmssName string) string {
+func (k *Kubeclient) WaitUntilNodeReady(ctx context.Context, t testing.TB, vmssName string) string {
+	startTime := time.Now()
 	var node *corev1.Node = nil
 	t.Logf("waiting for node %s to be ready", vmssName)
+	defer t.Logf("waited for node %s to be ready for %s", vmssName, time.Since(startTime))
 
 	watcher, err := k.Typed.CoreV1().Nodes().Watch(ctx, metav1.ListOptions{})
 	require.NoError(t, err, "failed to start watching nodes")
@@ -158,13 +160,22 @@ func (k *Kubeclient) WaitUntilNodeReady(ctx context.Context, t *testing.T, vmssN
 			continue
 		}
 
-		castNode := event.Object.(*corev1.Node)
-		if !strings.HasPrefix(castNode.Name, vmssName) {
+		var nodeFromEvent *corev1.Node
+		switch v := event.Object.(type) {
+		case *corev1.Node:
+			nodeFromEvent = v
+
+		default:
+			t.Logf("skipping object type %T", event.Object)
+			continue
+		}
+
+		if !strings.HasPrefix(nodeFromEvent.Name, vmssName) {
 			continue
 		}
 
 		// found the right node. Use it!
-		node = castNode
+		node = nodeFromEvent
 		nodeTaints, _ := json.Marshal(node.Spec.Taints)
 		nodeConditions, _ := json.Marshal(node.Status.Conditions)
 
@@ -179,7 +190,7 @@ func (k *Kubeclient) WaitUntilNodeReady(ctx context.Context, t *testing.T, vmssN
 	}
 
 	if node == nil {
-		t.Fatalf("failed to wait for %q to appear in the API server", vmssName)
+		t.Fatalf("%q haven't appeared in k8s API server", vmssName)
 		return ""
 	}
 
