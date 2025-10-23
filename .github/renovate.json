@@ -71,6 +71,15 @@
       "enabled": true
     },
     {
+      "matchDatasources": [
+        "rpm"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "enabled": true
+    },
+    {
       "matchPackageNames": [
         "moby-runc",
         "moby-containerd",
