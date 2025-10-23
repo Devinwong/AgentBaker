@@ -106,7 +106,8 @@
       "matchPackageNames": [
         "moby-runc",
         "moby-containerd",
-        "containerd2"
+        "containerd2",
+        "nvidia-device-plugin"
       ],
       "matchUpdateTypes": [
         "minor"
