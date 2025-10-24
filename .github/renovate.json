@@ -72,7 +72,8 @@
     },
     {
       "matchPackageNames": [
-        "nvidia-device-plugin"
+        "nvidia-device-plugin",
+        "azure-acr-credential-provider"
       ],
       "matchUpdateTypes": [
         "patch",
