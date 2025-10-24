@@ -80,6 +80,7 @@
       "matchUpdateTypes": [
         "minor"
       ],
+      "groupName": "minor-nvidia-device-plugin",
       "enabled": true
     },
     {
