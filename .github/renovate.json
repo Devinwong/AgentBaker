@@ -74,6 +74,9 @@
       "matchDatasources": [
         "rpm"
       ],
+      "matchPackageNames": [
+        "nvidia-device-plugin"
+      ],
       "matchUpdateTypes": [
         "minor"
       ],
