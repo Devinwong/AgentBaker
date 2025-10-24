@@ -71,9 +71,6 @@
       "enabled": true
     },
     {
-      "matchDatasources": [
-        "rpm"
-      ],
       "matchPackageNames": [
         "nvidia-device-plugin"
       ],
