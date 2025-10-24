@@ -508,7 +508,7 @@
       "customType": "regex",
       "description": "auto update containerImages in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -521,7 +521,7 @@
       "customType": "regex",
       "description": "auto update OCI artifacts in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -534,7 +534,7 @@
       "customType": "regex",
       "description": "auto update packages for OS ubuntu 20.04 in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -548,7 +548,7 @@
       "customType": "regex",
       "description": "auto update packages for OS ubuntu 22.04 in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -562,7 +562,7 @@
       "customType": "regex",
       "description": "auto update Nvidia DCGM packages for OS ubuntu 22.04 in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -576,7 +576,7 @@
       "customType": "regex",
       "description": "auto update packages for OS ubuntu 24.04 in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -590,7 +590,7 @@
       "customType": "regex",
       "description": "auto update Nvidia DCGM packages for OS ubuntu 24.04 in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -604,7 +604,7 @@
       "customType": "regex",
       "description": "auto update packages for OS ubuntu 24.04 (test registry) in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -618,7 +618,7 @@
       "customType": "regex",
       "description": "auto update packages for OS Mariner 2.0 in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -631,7 +631,7 @@
       "customType": "regex",
       "description": "auto update packages for OS AzureLinux 3.0 in components.json",
       "managerFilePatterns": [
-        "/parts/common/components.json/"
+        "/parts/common/components.json"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -644,7 +644,7 @@
       "customType": "regex",
       "description": "update version line in any cse_*.sh",
       "managerFilePatterns": [
-        "/^.*cse_.*\\.sh/"
+        "/^.*cse_.*\\.sh"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
