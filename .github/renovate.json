@@ -78,9 +78,10 @@
         "nvidia-device-plugin"
       ],
       "matchUpdateTypes": [
-        "patch"
+        "patch",
+        "minor"
       ],
-      "enabled": false
+      "enabled": true
     },
     {
       "matchPackageNames": [
