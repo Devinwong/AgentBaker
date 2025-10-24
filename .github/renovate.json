@@ -29,7 +29,7 @@
       "matchUpdateTypes": [
         "minor"
       ],
-      "enabled": false
+      "enabled": true
     },
     {
       "matchPackageNames": [
