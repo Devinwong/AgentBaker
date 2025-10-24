@@ -73,7 +73,7 @@
     {
       "matchPackageNames": [
         "nvidia-device-plugin",
-        "azure-acr-credential-provider"
+        "kubernetes-cri-tools"
       ],
       "matchUpdateTypes": [
         "patch",
