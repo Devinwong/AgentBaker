@@ -71,14 +71,16 @@
       "enabled": true
     },
     {
+      "matchDatasources": [
+        "rpm"
+      ],
       "matchPackageNames": [
         "nvidia-device-plugin"
       ],
       "matchUpdateTypes": [
-        "minor"
+        "patch"
       ],
-      "groupName": "minor-nvidia-device-plugin",
-      "enabled": true
+      "enabled": false
     },
     {
       "matchPackageNames": [
