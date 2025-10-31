@@ -27,7 +27,8 @@
             "versionsV2": [
               {
                 "renovateTag": "RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=nvidia-device-plugin, os=azurelinux, release=3.0",
-                "latestVersion": "0.17.0-0.azl3"
+                "latestVersion": "0.18.0-0.azl3",
+                "previousVersion": "0.17.1-1.azl3"
               }
             ]
           }
